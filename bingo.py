@@ -1,8 +1,51 @@
+############# Python Bingo ######################
+# Beta Version .6
+# Changes:
+# 1. Moved printing Bingo card to its own function
+# 2. Added gametype as dictionary
+# 3. Added choice of game option
+# 4. Added main() function
+
+
 import random
 
+def printcard(B, I, N, G, O):
+    # Print the Bingo card
+    print("=================================")
+    print("  B     I     N     G     O")
+    print("=================================")
+
+    for row in range(5):
+        print(f"{str(B[row]):^6}{str(I[row]):^6}"
+              f"{str(N[row]):^6}{str(G[row]):^6}"
+              f"{str(O[row]):^6}")
+
+    print("=================================")
 
 def gametype():
-    gametype = ['Vertical', 'Horizontal', 'Diagonal', 'Full Card']
+    gametype = {
+        "Vertical": 1,
+        "Horizontal": 2,
+        "Diagonal": 3,
+        "Full Card": 4
+    }
+
+    print("Choose a Bingo Game Type:")
+
+    for game, number in gametype.items():
+        print(f"{number}. {game}")
+
+    # Get the user's choice
+    while True:
+        choice = int(input("Enter your choice (1-4): "))
+
+        # Find the selected game
+        for game, number in gametype.items():
+            if choice == number:
+                print(f"You selected {game}")
+                return choice
+        else:
+            print("Invalid selection!")
 
 
 def showmenu():
@@ -50,20 +93,19 @@ def create_card():
     # Possibly correct that behavior if needed
     N[2] = "FREE"
 
-    # Print the Bingo card
-    print("=================================")
-    print("  B     I     N     G     O")
-    print("=================================")
+    printcard(B, I, N, G, O)
+    return B, I, N, G, O
 
-    for row in range(5):
-        print(f"{str(B[row]):^6}{str(I[row]):^6}"
-              f"{str(N[row]):^6}{str(G[row]):^6}"
-              f"{str(O[row]):^6}")
+def main():
+    if showmenu() == 1:
+        callnumber()
+    else:
+        mygametype = gametype()
+        B, I, N, G, O = create_card()
+        bingocard = [B, I, N, G, O]
+        numbercalled = int(input("Enter the number called: "))
 
-    print("=================================")
 
+if __name__ == "__main__":
+    main()
 
-if showmenu() == 1:
-    callnumber()
-else:
-    create_card()
