@@ -1,13 +1,53 @@
 ############# Python Bingo ######################
-# Beta Version .6
+# Beta Version .7
 # Changes:
-# 1. Moved printing Bingo card to its own function
-# 2. Added gametype as dictionary
-# 3. Added choice of game option
-# 4. Added main() function
+# 1. Added error checking to showmenu and gametype
+# 2. Added file to keep track of called numbers
+# 3. After a number is entered, card redraws
+# 4. Added checkbingo function
 
 
 import random
+
+def checkbingo(B, I, N, G, O, numbercalled):
+
+    numbercalled = numbercalled.upper().strip()
+
+    columns = {
+        "B": B,
+        "I": I,
+        "N": N,
+        "G": G,
+        "O": O
+    }
+
+    if len(numbercalled) < 2:
+        print("Invalid number!")
+        return False
+
+    letter = numbercalled[0]
+
+    try:
+        number = int(numbercalled[1:])
+    except ValueError:
+        print("Invalid number!")
+        return False
+
+    if letter not in columns:
+        print("Invalid Bingo letter!")
+        return False
+
+    if number in columns[letter]:
+        print("Number found!")
+        return True
+    else:
+        print("Number not found!")
+        return False
+
+
+def openfile():
+        with open('callednumbers.txt', 'w') as file:
+            return file
 
 def printcard(B, I, N, G, O):
     # Print the Bingo card
@@ -37,7 +77,12 @@ def gametype():
 
     # Get the user's choice
     while True:
-        choice = int(input("Enter your choice (1-4): "))
+        while True:
+            try:
+                choice = int(input("Enter your choice (1-4): "))
+                break
+            except ValueError:
+                print("Please enter a number.")
 
         # Find the selected game
         for game, number in gametype.items():
@@ -53,8 +98,16 @@ def showmenu():
     print("======= Welcome to Bingo! =======")
     print("Choose 1 to call numbers")
     print("Choose 2 to create card")
-    mychoice = int(input("Choose your choice: "))
-    return mychoice
+    while True:
+        try:
+            mychoice = int(input("Choose your choice: "))
+            if mychoice < 1 or mychoice > 2:
+                print("Please enter a number between 1 and 2.")
+            else:
+                return mychoice
+        except ValueError:
+            print("Please enter a number between 1 and 2.")
+
 
 
 def get_bingo_numbers():
@@ -67,18 +120,23 @@ def get_bingo_numbers():
 
 
 def callnumber():
-    callednumbers = []
-    bingonumbers = get_bingo_numbers()
-    while True:
-        number = random.choice(bingonumbers)
-        callednumbers.append(number)
-        print(number)
-        bingonumbers.remove(number)
-        bingodone = input("Called Bingo (y/n)").lower()
-        if bingodone == 'y':
-            print(callednumbers)
-            break
+    try:
+        with open('callednumbers.txt', 'a') as file:
 
+            callednumbers = []
+            bingonumbers = get_bingo_numbers()
+            while True:
+                number = random.choice(bingonumbers)
+                callednumbers.append(number)
+                file.write(f"{number}\n")
+                print(number)
+                bingonumbers.remove(number)
+                bingodone = input("Called Bingo (y/n)").lower()
+                if bingodone == 'y':
+                    print(callednumbers)
+                    break
+    except FileNotFoundError:
+        openfile()
 
 def create_card():
     # Generate five columns of random numbers
@@ -100,12 +158,15 @@ def main():
     if showmenu() == 1:
         callnumber()
     else:
+        numbercalled = "0"
         mygametype = gametype()
         B, I, N, G, O = create_card()
         bingocard = [B, I, N, G, O]
-        numbercalled = int(input("Enter the number called: "))
-
+        while numbercalled != "BINGO":
+            numbercalled = input("Enter the number called: ")
+            print(numbercalled)
+            isoncard = checkbingo(B,I,N,G,O, numbercalled)
+            printcard(B, I, N, G, O)
 
 if __name__ == "__main__":
     main()
-
