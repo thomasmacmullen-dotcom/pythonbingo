@@ -1,8 +1,40 @@
 Python Bingo
-Version: Beta 0.6 (documentation draft)
 
-Python Bingo is a terminal-based Bingo project written in Python. It includes a randomized Bingo number caller and a generator for traditional 5 × 5 Bingo cards. The project is developed incrementally to demonstrate foundational Python programming concepts and how software evolves from one beta release to the next.
-Documentation note: The Beta 0.6 source code has not yet been provided for review. Features below are confirmed from Beta 0.5; any Beta 0.6 changes still need verification before this README is published as a final release description.
+A Python Programming Teaching Aid
+
+Python Bingo is a terminal-based Bingo application developed as a teaching aid for students enrolled in introductory Python programming courses.
+
+The project demonstrates fundamental programming concepts through a familiar, interactive game. Students can explore how functions, lists, dictionaries, loops, conditional statements, random number generation, exception handling, and file operations work together in a practical application.
+
+Rather than presenting a finished application, Python Bingo is being developed and published incrementally. Each beta release introduces new functionality, improves existing code, or addresses limitations identified in earlier versions.
+
+This approach allows students to observe the software development process, including debugging, testing, code organization, and iterative improvement.
+
+Educational Objectives
+
+The project is intended to help introductory programming students:
+
+Understand how individual programming concepts work together in a complete application.
+
+Practice working with lists and dictionaries to organize and manipulate data.
+
+Explore functions and modular program design.
+
+Apply loops, conditional statements, and input validation.
+
+Understand random number generation and preventing duplicate selections.
+
+Examine file handling and data persistence.
+
+Recognize the importance of testing, debugging, and incremental software development.
+
+Development Philosophy
+
+One of the central lessons of introductory programming is that a working application does not have to be complicated from the beginning.
+
+Python Bingo began with basic number calling and Bingo card generation. Subsequent versions build on that foundation, introducing additional capabilities while providing opportunities to revisit and improve earlier code.
+
+By preserving the beta releases, students can compare versions, identify changes, and see how a simple program evolves over time.
 
 Confirmed features
 - Number caller: Randomly selects from the standard set of 75 Bingo numbers, with the corresponding B, I, N, G, or O prefix.
@@ -42,6 +74,11 @@ Beta 0.6:
 # 2. Added gametype as dictionary
 # 3. Added choice of game option
 # 4. Added main() function
+Beta 0.7:
+# 1. Added error checking to showmenu and gametype
+# 2. Added file to keep track of called numbers
+# 3. After a number is entered, card redraws
+# 4. Added checkbingo functio
 
 Proposed Future Features:
 
